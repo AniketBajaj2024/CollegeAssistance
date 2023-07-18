@@ -52,7 +52,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                 if (selectedRole == 'Admin') {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AdminScreen()),
+                    MaterialPageRoute(builder: (context) => FileUploader()),
                   );
                 } else {
                   Navigator.push(
