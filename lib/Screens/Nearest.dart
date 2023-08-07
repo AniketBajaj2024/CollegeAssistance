@@ -44,6 +44,98 @@ import 'package:maj_project/classrooms.dart';
 //   }
 // }
 
+// class AvailableClassroomScreen extends StatefulWidget {
+//   final List<Timetablentry> timetableData;
+//   const AvailableClassroomScreen({required this.timetableData});
+
+//   @override
+//   State<AvailableClassroomScreen> createState() =>
+//       _AvailableClassroomScreenState();
+// }
+
+// class _AvailableClassroomScreenState extends State<AvailableClassroomScreen> {
+//   // List<String> findOccupiedClassrooms() {
+//   List<String> findAvailableClassrooms() {
+//     DateTime currentTime = DateTime.now(); // got current time
+//     // iterate on timetable
+//     List<Timetablentry> filteredEntries = widget.timetableData.where((entry) {
+//       DateTime entryTime = DateFormat('HH:mm').parse(entry.time);
+//       return entryTime.isBefore(currentTime);
+//     }).toList();
+
+//     final List<String> occupiedclassrooms =
+//         filteredEntries.map((entry) => entry.classroom).toList();
+//     final List<String> availableclassrooms = allClassrooms
+//         .where((classroom) => !occupiedclassrooms.contains(classroom))
+//         .toList();
+//     return availableclassrooms;
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     List<String> availableclassrooms = findAvailableClassrooms();
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Available Classrooms'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: availableclassrooms.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text(availableclassrooms[index]),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
+// import statements...
+// class AvailableClassroomScreen extends StatefulWidget {
+//   final List<Timetablentry> timetableData;
+//   const AvailableClassroomScreen({required this.timetableData});
+
+//   @override
+//   State<AvailableClassroomScreen> createState() =>
+//       _AvailableClassroomScreenState();
+// }
+
+// class _AvailableClassroomScreenState extends State<AvailableClassroomScreen> {
+//   List<String> findAvailableClassrooms() {
+//     DateTime currentTime = DateTime.now(); // got current time
+//     // iterate on timetable
+//     List<Timetablentry> filteredEntries = widget.timetableData.where((entry) {
+//       DateTime entryTime = DateFormat('h:mm a').parse(entry.time);
+//       return entryTime.isBefore(currentTime);
+//     }).toList();
+
+//     final List<String> occupiedclassrooms =
+//         filteredEntries.map((entry) => entry.classroom).toList();
+//     final List<String> availableclassrooms = allClassrooms
+//         .where((classroom) => !occupiedclassrooms.contains(classroom))
+//         .toList();
+//     return availableclassrooms;
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     List<String> availableclassrooms = findAvailableClassrooms();
+
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Available Classrooms'),
+//       ),
+//       body: ListView.builder(
+//         itemCount: availableclassrooms.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text(availableclassrooms[index]),
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
 class AvailableClassroomScreen extends StatefulWidget {
   final List<Timetablentry> timetableData;
   const AvailableClassroomScreen({required this.timetableData});
@@ -54,21 +146,25 @@ class AvailableClassroomScreen extends StatefulWidget {
 }
 
 class _AvailableClassroomScreenState extends State<AvailableClassroomScreen> {
-  // List<String> findOccupiedClassrooms() {
   List<String> findAvailableClassrooms() {
     DateTime currentTime = DateTime.now(); // got current time
-    // iterate on timetable
-    List<Timetablentry> filteredEntries = widget.timetableData.where((entry) {
-      DateTime entryTime = DateFormat('HH:mm').parse(entry.time);
-      return entryTime.isBefore(currentTime);
-    }).toList();
+    if (widget.timetableData.isEmpty) {
+      // If timetableData is empty, return all classrooms
+      return allClassrooms;
+    } else {
+      // Iterate on timetable
+      List<Timetablentry> filteredEntries = widget.timetableData.where((entry) {
+        DateTime entryTime = DateFormat('h:mm a').parse(entry.time);
+        return entryTime.isBefore(currentTime);
+      }).toList();
 
-    final List<String> occupiedclassrooms =
-        filteredEntries.map((entry) => entry.classroom).toList();
-    final List<String> availableclassrooms = allClassrooms
-        .where((classroom) => !occupiedclassrooms.contains(classroom))
-        .toList();
-    return availableclassrooms;
+      final List<String> occupiedclassrooms =
+          filteredEntries.map((entry) => entry.classroom).toList();
+      final List<String> availableclassrooms = allClassrooms
+          .where((classroom) => !occupiedclassrooms.contains(classroom))
+          .toList();
+      return availableclassrooms;
+    }
   }
 
   @override
